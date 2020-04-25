@@ -1,4 +1,4 @@
-package com.mj147.cards;
+package com.mj147.domain.cards;
 
 public enum Rank {
     TWO("2"),
@@ -17,7 +17,7 @@ public enum Rank {
 
     private String symbol;
 
-    private Rank(String symbol) {
+    Rank(String symbol) {
         this.symbol = symbol;
     }
 

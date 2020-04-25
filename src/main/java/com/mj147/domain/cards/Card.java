@@ -1,11 +1,21 @@
-package com.mj147.cards;
+package com.mj147.domain.cards;
 
+import javax.persistence.*;
 import java.util.Objects;
 
+@Entity
 public class Card {
 
+    @Id
+    @GeneratedValue
+    private Long id;
+    @Enumerated(EnumType.STRING)
     private final Rank rank;
+    @Enumerated(EnumType.STRING)
     private final Suit suit;
+    @ManyToOne
+    @JoinColumn(name = "deck_id")
+    private Deck deck;
 
     Card(Rank rank, Suit suit) {
         this.rank = rank;
