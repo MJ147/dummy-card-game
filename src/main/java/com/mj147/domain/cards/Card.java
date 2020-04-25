@@ -1,8 +1,11 @@
 package com.mj147.domain.cards;
 
-import javax.persistence.*;
-import java.util.Objects;
+import com.mj147.domain.player.Hand;
+import lombok.Data;
 
+import javax.persistence.*;
+
+@Data
 @Entity
 public class Card {
 
@@ -13,40 +16,12 @@ public class Card {
     private final Rank rank;
     @Enumerated(EnumType.STRING)
     private final Suit suit;
-    @ManyToOne
-    @JoinColumn(name = "deck_id")
     private Deck deck;
+    private Hand hand;
 
     Card(Rank rank, Suit suit) {
         this.rank = rank;
         this.suit = suit;
-    }
-
-    public Rank getRank() {
-        return rank;
-    }
-
-    public Suit getSuit() {
-        return suit;
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        Card card = (Card) o;
-        return rank == card.rank &&
-                suit == card.suit;
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(rank, suit);
-    }
-
-    @Override
-    public String toString() {
-        return rank.getSymbol() + " of " + suit;
     }
 
 }
