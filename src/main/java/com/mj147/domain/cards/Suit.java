@@ -1,4 +1,4 @@
-package com.mj147.cards;
+package com.mj147.domain.cards;
 
 public enum Suit {
     CLUBS,
