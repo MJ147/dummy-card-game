@@ -11,7 +11,7 @@
 	<groupId>com.mj147</groupId>
 	<artifactId>dummy-card-game</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>dummy-card-game</name>e>git remote origin
+	<name>dummy-card-game</name>
 
 	<properties>
 		<java.version>1.8</java.version>
