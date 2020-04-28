@@ -24,5 +24,4 @@ public enum Rank {
     public String getSymbol() {
         return symbol;
     }
-
 }

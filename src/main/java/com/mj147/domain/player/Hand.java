@@ -1,14 +1,15 @@
 package com.mj147.domain.player;
 
 import com.mj147.domain.cards.Card;
+import lombok.Data;
 
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
 
+@Data
 @Entity
 public class Hand {
-
     @Id
     @GeneratedValue
     private Long id;
@@ -16,7 +17,7 @@ public class Hand {
     @JoinColumn(name = "player_id", referencedColumnName = "id")
     private Player player;
     private int numberOfCards;
-    @OneToMany(mappedBy = "hand", cascade = CascadeType.ALL)
+    @OneToMany
     private List<Card> cards;
 
     public List<Card> getCards() {
@@ -25,5 +26,4 @@ public class Hand {
         }
         return cards;
     }
-
 }
