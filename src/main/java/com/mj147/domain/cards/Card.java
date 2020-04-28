@@ -1,6 +1,5 @@
 package com.mj147.domain.cards;
 
-import com.mj147.domain.player.Hand;
 import lombok.Data;
 
 import javax.persistence.*;
@@ -8,20 +7,20 @@ import javax.persistence.*;
 @Data
 @Entity
 public class Card {
-
     @Id
     @GeneratedValue
     private Long id;
     @Enumerated(EnumType.STRING)
-    private final Rank rank;
+    private Rank rank;
     @Enumerated(EnumType.STRING)
-    private final Suit suit;
-    private Deck deck;
-    private Hand hand;
+    private Suit suit;
 
-    Card(Rank rank, Suit suit) {
+    public Card() {
+    }
+
+    Card(Long id, Rank rank, Suit suit) {
+        this.id = id;
         this.rank = rank;
         this.suit = suit;
     }
-
 }

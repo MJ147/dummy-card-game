@@ -10,14 +10,14 @@ import java.util.List;
 
 @Data
 @Entity
-public class Table {
-
+@Table(name = "card_table")
+public class CardTable {
     @Id
     @GeneratedValue
     private Long id;
-    @OneToOne(mappedBy = "table", cascade = CascadeType.ALL)
+    @OneToOne(mappedBy = "cardTable", cascade = CascadeType.ALL)
     private Deck deck;
-    @OneToMany(mappedBy = "table")
+    @OneToMany(mappedBy = "cardTable")
     private List<Player> players;
 
     public List<Player> getPlayers() {
