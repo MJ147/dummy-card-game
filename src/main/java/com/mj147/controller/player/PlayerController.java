@@ -3,6 +3,7 @@ package com.mj147.controller.player;
 import com.mj147.controller.dto.player.PlayerDto;
 import com.mj147.repository.player.PlayerRepository;
 import com.mj147.service.PlayerService;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -15,20 +16,14 @@ import java.util.stream.StreamSupport;
 public class PlayerController {
 
     private final PlayerService playerService;
-    private final PlayerRepository playerRepository;
 
     public PlayerController(PlayerService playerService, PlayerRepository playerRepository) {
         this.playerService = playerService;
-        this.playerRepository = playerRepository;
     }
 
     @PostMapping("/")
     public ResponseEntity<Long> createPlayer(@RequestBody PlayerDto playerDto) {
-        Long playerId = playerService.createPlayer(
-                playerDto.getNick(),
-                playerDto.getSex(),
-                playerDto.getAge()
-        );
+        Long playerId = playerService.createPlayer(playerDto);
         return ResponseEntity.ok(playerId);
     }
 
@@ -46,5 +41,10 @@ public class PlayerController {
         return ResponseEntity.ok(playerDtoList);
     }
 
+    @DeleteMapping("/{id}")
+    public HttpStatus removePlayer(@PathVariable("id") Long id) {
+        playerService.removePlayer(id);
+        return HttpStatus.OK;
+    }
 }
 

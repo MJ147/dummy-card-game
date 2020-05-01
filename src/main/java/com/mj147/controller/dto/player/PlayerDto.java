@@ -7,16 +7,16 @@ import lombok.Data;
 @Data
 public class PlayerDto {
     private Long id;
-    private String nick;
+    private String name;
     private Sex sex;
-    private int age;
+    private Integer age;
 
     public PlayerDto() {
     }
 
     public PlayerDto(Player player) {
         this.id = player.getId();
-        this.nick = player.getName();
+        this.name = player.getName();
         this.sex = player.getSex();
         this.age = player.getAge();
     }

@@ -13,7 +13,7 @@ public class Player {
     private Long id;
     private String name;
     private Sex sex;
-    private int age;
+    private Integer age;
     @ManyToOne
     @JoinColumn(name = "table_id")
     private CardTable cardTable;

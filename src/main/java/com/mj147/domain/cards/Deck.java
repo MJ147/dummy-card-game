@@ -12,7 +12,7 @@ public class Deck {
     @Id
     @GeneratedValue
     private Long id;
-    private static final int NUMBERS_OF_CARDS_IN_FULL_DECK = 52;
+    private static final Integer NUMBERS_OF_CARDS_IN_FULL_DECK = 52;
     @OneToOne
     @JoinTable(name = "card_table_id")
     private CardTable cardTable;
