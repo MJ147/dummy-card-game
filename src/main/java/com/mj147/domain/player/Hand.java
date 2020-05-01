@@ -16,7 +16,7 @@ public class Hand {
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "player_id", referencedColumnName = "id")
     private Player player;
-    private int numberOfCards;
+    private Integer numberOfCards;
     @OneToMany
     private List<Card> cards;
 

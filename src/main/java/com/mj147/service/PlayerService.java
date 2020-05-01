@@ -1,10 +1,10 @@
 package com.mj147.service;
 
+import com.mj147.controller.dto.player.PlayerDto;
 import com.mj147.domain.player.Player;
-import com.mj147.domain.player.Sex;
 
 public interface PlayerService {
-    Long createPlayer(String name, Sex sex, int age);
+    Long createPlayer(PlayerDto playerDto);
 
     Player getPlayer(Long id);
 

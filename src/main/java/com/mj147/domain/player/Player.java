@@ -11,9 +11,9 @@ public class Player {
     @Id
     @GeneratedValue
     private Long id;
-    private String nick;
+    private String name;
     private Sex sex;
-    private int age;
+    private Integer age;
     @ManyToOne
     @JoinColumn(name = "table_id")
     private CardTable cardTable;
@@ -23,9 +23,9 @@ public class Player {
     public Player() {
     }
 
-    public Player(Long id, String nick, Sex sex, int age) {
+    public Player(Long id, String name, Sex sex, int age) {
         this.id = id;
-        this.nick = nick;
+        this.name = name;
         this.sex = sex;
         this.age = age;
     }
