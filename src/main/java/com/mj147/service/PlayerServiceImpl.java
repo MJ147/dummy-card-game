@@ -45,8 +45,8 @@ public class PlayerServiceImpl extends AbstractCommonService implements PlayerSe
 
     @Override
     public Player getPlayer(Long id) {
-        return playerRepository.findById(id).orElseThrow(
-                () -> new CommonConflictException(msgSource.ERR002));
+        checkPlayerId(id);
+        return playerRepository.findById(id).get();
     }
 
     @Override
@@ -56,7 +56,13 @@ public class PlayerServiceImpl extends AbstractCommonService implements PlayerSe
 
     @Override
     public void removePlayer(Long id) {
-        getPlayer(id);
+        checkPlayerId(id);
         playerRepository.deleteById(id);
+    }
+
+    private void checkPlayerId(Long id) {
+        if (!playerRepository.findById(id).isPresent()) {
+            throw new CommonConflictException(msgSource.ERR002);
+        }
     }
 }
