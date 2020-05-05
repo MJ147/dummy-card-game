@@ -1,4 +1,4 @@
-package com.mj147.service;
+package com.mj147.service.player;
 
 import com.mj147.common.MsgSource;
 import com.mj147.controller.dto.player.PlayerDto;
@@ -6,6 +6,7 @@ import com.mj147.domain.player.Player;
 import com.mj147.exception.CommonBadRequestException;
 import com.mj147.exception.CommonConflictException;
 import com.mj147.repository.player.PlayerRepository;
+import com.mj147.service.AbstractCommonService;
 import org.springframework.stereotype.Service;
 
 import static com.mj147.common.ValidationUtils.*;
@@ -45,8 +46,8 @@ public class PlayerServiceImpl extends AbstractCommonService implements PlayerSe
 
     @Override
     public Player getPlayer(Long id) {
-        return playerRepository.findById(id).orElseThrow(
-                () -> new CommonConflictException(msgSource.ERR002));
+        checkPlayerId(id);
+        return playerRepository.findById(id).get();
     }
 
     @Override
@@ -56,7 +57,13 @@ public class PlayerServiceImpl extends AbstractCommonService implements PlayerSe
 
     @Override
     public void removePlayer(Long id) {
-        getPlayer(id);
+        checkPlayerId(id);
         playerRepository.deleteById(id);
+    }
+
+    private void checkPlayerId(Long id) {
+        if (!playerRepository.findById(id).isPresent()) {
+            throw new CommonConflictException(msgSource.ERR002);
+        }
     }
 }
