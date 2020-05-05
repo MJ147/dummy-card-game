@@ -10,7 +10,7 @@ import java.util.*;
 @Entity
 public class Deck {
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private static final Integer NUMBERS_OF_CARDS_IN_FULL_DECK = 52;
     @OneToOne

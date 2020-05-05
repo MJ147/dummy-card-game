@@ -1,4 +1,4 @@
-package com.mj147.service;
+package com.mj147.service.player;
 
 import com.mj147.controller.dto.player.PlayerDto;
 import com.mj147.domain.player.Player;

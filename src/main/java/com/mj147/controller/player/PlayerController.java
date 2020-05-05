@@ -1,8 +1,7 @@
 package com.mj147.controller.player;
 
 import com.mj147.controller.dto.player.PlayerDto;
-import com.mj147.repository.player.PlayerRepository;
-import com.mj147.service.PlayerService;
+import com.mj147.service.player.PlayerService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -17,7 +16,7 @@ public class PlayerController {
 
     private final PlayerService playerService;
 
-    public PlayerController(PlayerService playerService, PlayerRepository playerRepository) {
+    public PlayerController(PlayerService playerService) {
         this.playerService = playerService;
     }
 
