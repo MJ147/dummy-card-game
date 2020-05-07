@@ -8,7 +8,7 @@ import javax.persistence.*;
 @Entity
 public class Card {
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     @Enumerated(EnumType.STRING)
     private Rank rank;
@@ -18,7 +18,7 @@ public class Card {
     public Card() {
     }
 
-    Card(Long id, Rank rank, Suit suit) {
+    public Card(Long id, Rank rank, Suit suit) {
         this.id = id;
         this.rank = rank;
         this.suit = suit;

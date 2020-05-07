@@ -2,12 +2,15 @@ package com.mj147.service.player;
 
 import com.mj147.common.MsgSource;
 import com.mj147.controller.dto.player.PlayerDto;
+import com.mj147.domain.cards.Card;
 import com.mj147.domain.player.Player;
 import com.mj147.exception.CommonBadRequestException;
 import com.mj147.exception.CommonConflictException;
 import com.mj147.repository.player.PlayerRepository;
 import com.mj147.service.AbstractCommonService;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 import static com.mj147.common.ValidationUtils.*;
 
@@ -65,5 +68,11 @@ public class PlayerServiceImpl extends AbstractCommonService implements PlayerSe
         if (!playerRepository.findById(id).isPresent()) {
             throw new CommonConflictException(msgSource.ERR002);
         }
+    }
+
+    @Override
+    public void updatePlayer(Player player) {
+        checkPlayerId(player.getId());
+        playerRepository.save(player);
     }
 }

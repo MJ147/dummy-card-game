@@ -43,6 +43,21 @@ public class DeckController {
     @DeleteMapping("/{id}")
     public HttpStatus removeDeck(@PathVariable("id") Long id) {
         deckService.removeDeck(id);
+
+        return HttpStatus.OK;
+    }
+
+    @PutMapping("/shuffle/{id}")
+    public HttpStatus shuffleDeck(@PathVariable("id") Long id) {
+        deckService.shuffleDeck(id);
+
+        return HttpStatus.OK;
+    }
+
+    @PutMapping("/deal")
+    public HttpStatus dealCard(@RequestParam Long deckId, @RequestParam Long cardId, @RequestParam Long playerId) {
+        deckService.dealCard(deckId, cardId, playerId);
+
         return HttpStatus.OK;
     }
 }

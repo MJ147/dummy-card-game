@@ -1,7 +1,10 @@
 package com.mj147.service.player;
 
 import com.mj147.controller.dto.player.PlayerDto;
+import com.mj147.domain.cards.Card;
 import com.mj147.domain.player.Player;
+
+import java.util.List;
 
 public interface PlayerService {
     Long createPlayer(PlayerDto playerDto);
@@ -12,4 +15,5 @@ public interface PlayerService {
 
     void removePlayer(Long id);
 
+    void updatePlayer(Player player);
 }
