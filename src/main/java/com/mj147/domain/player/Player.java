@@ -1,9 +1,12 @@
 package com.mj147.domain.player;
 
 import com.mj147.domain.CardTable;
+import com.mj147.domain.cards.Card;
 import lombok.Data;
 
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
 @Data
 @Entity
@@ -17,8 +20,15 @@ public class Player {
     @ManyToOne
     @JoinColumn(name = "table_id")
     private CardTable cardTable;
-    @OneToOne(mappedBy = "player")
-    private Hand hand;
+    @OneToMany
+    private List<Card> cards;
+
+    public List<Card> getCards() {
+        if (cards == null) {
+            cards = new ArrayList<>();
+        }
+        return cards;
+    }
 
     public Player() {
     }

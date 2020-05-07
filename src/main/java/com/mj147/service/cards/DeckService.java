@@ -11,4 +11,9 @@ public interface DeckService {
 
     void removeDeck(Long id);
 
+    void shuffleDeck(Long id);
+
+    void dealCard(Long deckId, Long cardId, Long playerId);
+
+    void updateDeck(Deck deck);
 }
