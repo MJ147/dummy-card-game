@@ -16,4 +16,6 @@ public interface PlayerService {
     void removePlayer(Long id);
 
     void updatePlayer(Player player);
+
+    void playCard(Long cardId, Long playerId, Long tableId);
 }

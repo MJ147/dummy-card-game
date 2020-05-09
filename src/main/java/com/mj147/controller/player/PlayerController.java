@@ -43,6 +43,14 @@ public class PlayerController {
     @DeleteMapping("/{id}")
     public HttpStatus removePlayer(@PathVariable("id") Long id) {
         playerService.removePlayer(id);
+
+        return HttpStatus.OK;
+    }
+
+    @PutMapping("/play-card")
+    public HttpStatus playCard(@RequestParam Long cardId, @RequestParam Long playerId, @RequestParam Long tableId) {
+        playerService.playCard(cardId, playerId, tableId);
+
         return HttpStatus.OK;
     }
 }

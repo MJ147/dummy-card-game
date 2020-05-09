@@ -11,6 +11,7 @@ import com.mj147.service.AbstractCommonService;
 import com.mj147.service.player.PlayerService;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
 import java.security.SecureRandom;
 import java.util.Collections;
 import java.util.List;
@@ -71,6 +72,7 @@ public class DeckServiceImpl extends AbstractCommonService implements DeckServic
         deckRepository.save(deck);
     }
 
+    @Transactional
     @Override
     public void dealCard(Long deckId, Long cardId, Long playerId) {
         Deck deck = getDeck(deckId);
