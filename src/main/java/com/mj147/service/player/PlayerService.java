@@ -19,5 +19,7 @@ public interface PlayerService {
 
     void joinTable(Long playerId, Long tableId);
 
+    void addCardToPlayer(Player player, Card card);
+
     void playCard(Long cardId, Long playerId, Long tableId);
 }

@@ -89,9 +89,24 @@ public class PlayerServiceImpl extends AbstractCommonService implements PlayerSe
         CardTable table = tableService.getCardTable(tableId);
         Player player = getPlayer(playerId);
         List<Player> players = table.getPlayers();
+        player.setCardTable(table);
         players.add(player);
         table.setPlayers(players);
+        updatePlayer(player);
         tableService.updateCardTable(table);
+    }
+
+//    List<Card> tempCards = table.getCards();
+//    tempCards.add(card);
+//    table.setCards(tempCards);
+//    updateCardTable(table);
+
+    @Override
+    public void addCardToPlayer(Player player, Card card){
+        List<Card> tempCards = player.getCards();
+        tempCards.add(card);
+        player.setCards(tempCards);
+        updatePlayer(player);
     }
 
     @Transactional
@@ -100,21 +115,15 @@ public class PlayerServiceImpl extends AbstractCommonService implements PlayerSe
         Player player = getPlayer(playerId);
         Card card = cardService.getCard(cardId);
         CardTable table = tableService.getCardTable(tableId);
-        removeCardFromPlayer(player, card);
-        addCardToCardTable(table, card);
+        removeCard(player, card);
+        tableService.addCardToTable(table, card);
     }
 
-    private void removeCardFromPlayer(Player player, Card card){
+    private void removeCard(Player player, Card card){
         List<Card> tempCards = player.getCards();
         tempCards.remove(card);
         player.setCards(tempCards);
         updatePlayer(player);
     }
 
-    private void addCardToCardTable(CardTable table, Card card){
-        List<Card> tempCards = table.getCards();
-        tempCards.add(card);
-        table.setCards(tempCards);
-        tableService.updateCardTable(table);
-    }
 }

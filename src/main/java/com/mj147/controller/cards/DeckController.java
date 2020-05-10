@@ -54,6 +54,13 @@ public class DeckController {
         return HttpStatus.OK;
     }
 
+    @PutMapping("/add-table")
+    public HttpStatus addToTable(@RequestParam Long deckId, @RequestParam Long tableId) {
+        deckService.addToTable(deckId, tableId);
+
+        return HttpStatus.OK;
+    }
+
     @PutMapping("/deal")
     public HttpStatus dealCard(@RequestParam Long deckId, @RequestParam Long cardId, @RequestParam Long playerId) {
         deckService.dealCard(deckId, cardId, playerId);

@@ -15,5 +15,7 @@ public interface DeckService {
 
     void dealCard(Long deckId, Long cardId, Long playerId);
 
+    void addToTable(Long playerId, Long tableId);
+
     void updateDeck(Deck deck);
 }

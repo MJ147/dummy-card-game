@@ -2,6 +2,7 @@ package com.mj147.service;
 
 import com.mj147.controller.dto.CardTableDto;
 import com.mj147.domain.CardTable;
+import com.mj147.domain.cards.Card;
 import com.mj147.domain.player.Player;
 
 public interface CardTableService {
@@ -15,4 +16,5 @@ public interface CardTableService {
 
     void updateCardTable(CardTable card);
 
+    void addCardToTable(CardTable table, Card card);
 }

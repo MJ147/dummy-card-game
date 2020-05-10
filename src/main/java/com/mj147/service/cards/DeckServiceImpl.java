@@ -2,12 +2,14 @@ package com.mj147.service.cards;
 
 import com.mj147.common.MsgSource;
 
+import com.mj147.domain.CardTable;
 import com.mj147.domain.cards.Card;
 import com.mj147.domain.cards.Deck;
 import com.mj147.domain.player.Player;
 import com.mj147.exception.CommonConflictException;
 import com.mj147.repository.cards.DeckRepository;
 import com.mj147.service.AbstractCommonService;
+import com.mj147.service.CardTableService;
 import com.mj147.service.player.PlayerService;
 import org.springframework.stereotype.Service;
 
@@ -22,12 +24,14 @@ public class DeckServiceImpl extends AbstractCommonService implements DeckServic
     private final DeckRepository deckRepository;
     private final CardService cardService;
     private final PlayerService playerService;
+    private final CardTableService tableService;
 
-    public DeckServiceImpl(MsgSource msgSource, DeckRepository deckRepository, CardService cardService, PlayerService playerService) {
+    public DeckServiceImpl(MsgSource msgSource, DeckRepository deckRepository, CardService cardService, PlayerService playerService, CardTableService tableService) {
         super(msgSource);
         this.deckRepository = deckRepository;
         this.cardService = cardService;
         this.playerService = playerService;
+        this.tableService = tableService;
     }
 
     @Override
@@ -79,7 +83,7 @@ public class DeckServiceImpl extends AbstractCommonService implements DeckServic
         Card card = cardService.getCard(cardId);
         Player player = playerService.getPlayer(playerId);
         removeCardFromDeck(deck, card);
-        addCardToPlayer(player, card);
+        playerService.addCardToPlayer(player, card);
     }
 
     private void removeCardFromDeck(Deck deck, Card card){
@@ -89,11 +93,14 @@ public class DeckServiceImpl extends AbstractCommonService implements DeckServic
         updateDeck(deck);
     }
 
-    private void addCardToPlayer(Player player, Card card){
-        List<Card> tempCards = player.getCards();
-        tempCards.add(card);
-        player.setCards(tempCards);
-        playerService.updatePlayer(player);
+    @Override
+    public void addToTable(Long deckId, Long tableId) {
+        CardTable table = tableService.getCardTable(tableId);
+        Deck deck = getDeck(deckId);
+        deck.setCardTable(table);
+        table.setDeck(deck);
+        updateDeck(deck);
+        tableService.updateCardTable(table);
     }
 
     @Override

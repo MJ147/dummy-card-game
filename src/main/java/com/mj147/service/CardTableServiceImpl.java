@@ -3,6 +3,7 @@ package com.mj147.service;
 import com.mj147.common.MsgSource;
 import com.mj147.controller.dto.CardTableDto;
 import com.mj147.domain.CardTable;
+import com.mj147.domain.cards.Card;
 import com.mj147.domain.player.Player;
 import com.mj147.exception.CommonBadRequestException;
 import com.mj147.exception.CommonConflictException;
@@ -71,4 +72,11 @@ public class CardTableServiceImpl extends AbstractCommonService implements CardT
         cardTableRepository.save(cardTable);
     }
 
+    @Override
+    public void addCardToTable(CardTable table, Card card){
+        List<Card> tempCards = table.getCards();
+        tempCards.add(card);
+        table.setCards(tempCards);
+        updateCardTable(table);
+    }
 }
