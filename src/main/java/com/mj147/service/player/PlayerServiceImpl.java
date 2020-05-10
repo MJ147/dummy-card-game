@@ -23,13 +23,13 @@ public class PlayerServiceImpl extends AbstractCommonService implements PlayerSe
 
     private final PlayerRepository playerRepository;
     private final CardService cardService;
-    private final CardTableService cardTableService;
+    private final CardTableService tableService;
 
-    public PlayerServiceImpl(MsgSource msgSource, PlayerRepository playerRepository, CardService cardService, CardTableService cardTableService) {
+    public PlayerServiceImpl(MsgSource msgSource, PlayerRepository playerRepository, CardService cardService, CardTableService tableService) {
         super(msgSource);
         this.playerRepository = playerRepository;
         this.cardService = cardService;
-        this.cardTableService = cardTableService;
+        this.tableService = tableService;
     }
 
     @Override
@@ -72,6 +72,12 @@ public class PlayerServiceImpl extends AbstractCommonService implements PlayerSe
         playerRepository.deleteById(id);
     }
 
+    @Override
+    public void updatePlayer(Player player) {
+        checkPlayerId(player.getId());
+        playerRepository.save(player);
+    }
+
     private void checkPlayerId(Long id) {
         if (!playerRepository.findById(id).isPresent()) {
             throw new CommonConflictException(msgSource.ERR002);
@@ -79,19 +85,23 @@ public class PlayerServiceImpl extends AbstractCommonService implements PlayerSe
     }
 
     @Override
-    public void updatePlayer(Player player) {
-        checkPlayerId(player.getId());
-        playerRepository.save(player);
+    public void joinTable(Long playerId, Long tableId) {
+        CardTable table = tableService.getCardTable(tableId);
+        Player player = getPlayer(playerId);
+        List<Player> players = table.getPlayers();
+        players.add(player);
+        table.setPlayers(players);
+        tableService.updateCardTable(table);
     }
 
     @Transactional
     @Override
-    public void playCard(Long cardId, Long playerId, Long cardTableId) {
+    public void playCard(Long cardId, Long playerId, Long tableId) {
         Player player = getPlayer(playerId);
         Card card = cardService.getCard(cardId);
-        CardTable cardTable = cardTableService.getCardTable(cardTableId);
+        CardTable table = tableService.getCardTable(tableId);
         removeCardFromPlayer(player, card);
-        addCardToCardTable(cardTable, card);
+        addCardToCardTable(table, card);
     }
 
     private void removeCardFromPlayer(Player player, Card card){
@@ -101,10 +111,10 @@ public class PlayerServiceImpl extends AbstractCommonService implements PlayerSe
         updatePlayer(player);
     }
 
-    private void addCardToCardTable(CardTable cardTable, Card card){
-        List<Card> tempCards = cardTable.getCards();
+    private void addCardToCardTable(CardTable table, Card card){
+        List<Card> tempCards = table.getCards();
         tempCards.add(card);
-        cardTable.setCards(tempCards);
-        cardTableService.updateCardTable(cardTable);
+        table.setCards(tempCards);
+        tableService.updateCardTable(table);
     }
 }

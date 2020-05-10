@@ -3,10 +3,13 @@ package com.mj147.service;
 import com.mj147.common.MsgSource;
 import com.mj147.controller.dto.CardTableDto;
 import com.mj147.domain.CardTable;
+import com.mj147.domain.player.Player;
 import com.mj147.exception.CommonBadRequestException;
 import com.mj147.exception.CommonConflictException;
 import com.mj147.repository.CardTableRepository;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 import static com.mj147.common.ValidationUtils.*;
 

@@ -13,7 +13,7 @@ import java.util.List;
 @Entity
 public class CardTable {
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String name;
     @OneToOne(mappedBy = "cardTable", cascade = CascadeType.ALL)

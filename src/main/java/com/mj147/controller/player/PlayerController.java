@@ -47,6 +47,13 @@ public class PlayerController {
         return HttpStatus.OK;
     }
 
+    @PutMapping("/join-table")
+    public HttpStatus joinTable(@RequestParam Long playerId, @RequestParam Long tableId) {
+        playerService.joinTable(playerId, tableId);
+
+        return HttpStatus.OK;
+    }
+
     @PutMapping("/play-card")
     public HttpStatus playCard(@RequestParam Long cardId, @RequestParam Long playerId, @RequestParam Long tableId) {
         playerService.playCard(cardId, playerId, tableId);
