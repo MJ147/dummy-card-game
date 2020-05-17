@@ -1,1 +1,1 @@
-# dummy-card-game
+# durak-card-game
