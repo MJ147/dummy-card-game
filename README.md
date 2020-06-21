@@ -13,3 +13,5 @@ To run project open file run.sh with Git Bash.
 * Spring 5
 * Spring Boot 2
 * H2 Database
+* Junit5
+* MockMVC
