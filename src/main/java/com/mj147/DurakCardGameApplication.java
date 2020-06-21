@@ -6,10 +6,10 @@ import org.springframework.context.annotation.PropertySource;
 
 @SpringBootApplication
 @PropertySource("classpath:message.properties")
-public class DummyCardGameApplication {
+public class DurakCardGameApplication {
 
 	public static void main(String[] args) {
-		SpringApplication.run(DummyCardGameApplication.class, args);
+		SpringApplication.run(DurakCardGameApplication.class, args);
 	}
 
 }
