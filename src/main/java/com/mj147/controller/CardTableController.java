@@ -1,6 +1,8 @@
 package com.mj147.controller;
 
 import com.mj147.controller.dto.CardTableDto;
+import com.mj147.controller.dto.player.PlayerDto;
+import com.mj147.domain.player.Player;
 import com.mj147.service.CardTableService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -14,26 +16,26 @@ import java.util.stream.StreamSupport;
 @RequestMapping("/table")
 public class CardTableController {
 
-    private final CardTableService cardPlayerService;
+    private final CardTableService cardTableService;
 
-    public CardTableController(CardTableService cardPlayerService) {
-        this.cardPlayerService = cardPlayerService;
+    public CardTableController(CardTableService cardTableService) {
+        this.cardTableService = cardTableService;
     }
 
     @PostMapping("/")
-    public ResponseEntity<Long> createCardTable(@RequestParam String name) {
-        Long cardPlayerId = cardPlayerService.createCardTable(name);
-        return ResponseEntity.ok(cardPlayerId);
+    public ResponseEntity<CardTableDto> createCardTable(@RequestParam String name) {
+        CardTableDto cardTableDto = new CardTableDto(cardTableService.createCardTable(name));
+        return ResponseEntity.ok(cardTableDto);
     }
 
     @GetMapping("/{id}")
     public ResponseEntity<CardTableDto> getCardTable(@PathVariable Long id) {
-        return ResponseEntity.ok(new CardTableDto(cardPlayerService.getCardTable(id)));
+        return ResponseEntity.ok(new CardTableDto(cardTableService.getCardTable(id)));
     }
 
     @GetMapping("/all")
     public ResponseEntity<List<CardTableDto>> getAllCardTables() {
-        List<CardTableDto> cardPlayerDtoList = StreamSupport.stream(cardPlayerService.getAllCardTables().spliterator(), false)
+        List<CardTableDto> cardPlayerDtoList = StreamSupport.stream(cardTableService.getAllCardTables().spliterator(), false)
                 .map(p -> new CardTableDto(p))
                 .collect(Collectors.toList());
 
@@ -42,9 +44,16 @@ public class CardTableController {
 
     @DeleteMapping("/{id}")
     public HttpStatus removeCardTable(@PathVariable("id") Long id) {
-        cardPlayerService.removeCardTable(id);
+        cardTableService.removeCardTable(id);
 
         return HttpStatus.OK;
+    }
+
+    @PutMapping("/add-player/")
+    public ResponseEntity<PlayerDto> addPlayer(@RequestParam Long tableId, @RequestBody Player player){
+        PlayerDto playerDto = new PlayerDto(cardTableService.addPlayer(tableId, player));
+
+        return  ResponseEntity.ok(playerDto);
     }
 
 }

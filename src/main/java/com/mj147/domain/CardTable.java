@@ -31,6 +31,12 @@ public class CardTable {
         this.name = name;
     }
 
+    public CardTable(Long id, String name, Deck deck) {
+        this.id = id;
+        this.name = name;
+        this.deck = deck;
+    }
+
     public List<Card> getCards() {
         if (cards == null) {
             cards = new ArrayList<>();
@@ -42,6 +48,13 @@ public class CardTable {
             players = new ArrayList<>();
         }
         return players;
+    }
+
+    public void setPlayer(Player player) {
+        if (players == null) {
+            players = new ArrayList<>();
+        }
+        players.add(player);
     }
 
 }

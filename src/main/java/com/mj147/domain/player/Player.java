@@ -3,6 +3,7 @@ package com.mj147.domain.player;
 import com.mj147.domain.CardTable;
 import com.mj147.domain.cards.Card;
 import lombok.Data;
+import lombok.ToString;
 
 import javax.persistence.*;
 import java.util.ArrayList;
@@ -19,6 +20,7 @@ public class Player {
     private Integer age;
     @ManyToOne
     @JoinColumn(name = "table_id")
+    @ToString.Exclude
     private CardTable cardTable;
     @OneToMany
     private List<Card> cards;

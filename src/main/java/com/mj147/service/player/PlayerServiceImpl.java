@@ -11,6 +11,7 @@ import com.mj147.repository.player.PlayerRepository;
 import com.mj147.service.AbstractCommonService;
 import com.mj147.service.CardTableService;
 import com.mj147.service.cards.CardService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
@@ -21,36 +22,37 @@ import static com.mj147.common.ValidationUtils.*;
 @Service
 public class PlayerServiceImpl extends AbstractCommonService implements PlayerService {
 
-    private final PlayerRepository playerRepository;
-    private final CardService cardService;
-    private final CardTableService cardTableService;
+    @Autowired
+    PlayerRepository playerRepository;
+    @Autowired
+    CardService cardService;
+    @Autowired
+    CardTableService cardTableService;
+    @Autowired
 
-    public PlayerServiceImpl(MsgSource msgSource, PlayerRepository playerRepository, CardService cardService, CardTableService cardTableService) {
+    public PlayerServiceImpl(MsgSource msgSource) {
         super(msgSource);
-        this.playerRepository = playerRepository;
-        this.cardService = cardService;
-        this.cardTableService = cardTableService;
     }
 
     @Override
-    public Long createPlayer(PlayerDto playerDto) {
-        validateCreatePlayerRequest(playerDto);
-        Player player = new Player(null, playerDto.getName(), playerDto.getSex(), playerDto.getAge());
+    public Player createPlayer(Player player) {
+        validateCreatePlayerRequest(player);
+//        Player player = new Player(null, player.getName(), playerDto.getSex(), playerDto.getAge());
         playerRepository.save(player);
 
-        return player.getId();
+        return player;
     }
 
-    private void validateCreatePlayerRequest(PlayerDto playerDto) {
-        if (isNullOrEmpty(playerDto.getName())
-                || isNull(playerDto.getSex())
-                || isNull(playerDto.getAge())) {
+    private void validateCreatePlayerRequest(Player player) {
+        if (isNullOrEmpty(player.getName())
+                || isNull(player.getSex())
+                || isNull(player.getAge())) {
             throw new CommonBadRequestException(msgSource.ERR001);
         }
-        if (playerRepository.existsByName(playerDto.getName())) {
+        if (playerRepository.existsByName(player.getName())) {
             throw new CommonConflictException(msgSource.ERR003);
         }
-        if (isZero(playerDto.getAge())) {
+        if (isZero(player.getAge())) {
             throw new CommonConflictException((msgSource.ERR004));
         }
     }

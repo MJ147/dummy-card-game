@@ -31,13 +31,13 @@ public class DeckServiceImpl extends AbstractCommonService implements DeckServic
     }
 
     @Override
-    public Long createDeck() {
+    public Deck createDeck() {
         Deck deck = new Deck();
         List<Card> cards = cardService.createCardsForFullDeck();
         deck.setCards(cards);
         deckRepository.save(deck);
 
-        return deck.getId();
+        return deck;
     }
 
     @Override

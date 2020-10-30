@@ -1,6 +1,7 @@
 package com.mj147.controller.player;
 
 import com.mj147.controller.dto.player.PlayerDto;
+import com.mj147.domain.player.Player;
 import com.mj147.service.player.PlayerService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -21,9 +22,9 @@ public class PlayerController {
     }
 
     @PostMapping("/")
-    public ResponseEntity<Long> createPlayer(@RequestBody PlayerDto playerDto) {
-        Long playerId = playerService.createPlayer(playerDto);
-        return ResponseEntity.ok(playerId);
+    public ResponseEntity<PlayerDto> createPlayer(@RequestBody Player player) {
+        PlayerDto playerDto = new PlayerDto(playerService.createPlayer(player));
+        return ResponseEntity.ok(playerDto);
     }
 
     @GetMapping("/{id}")

@@ -21,9 +21,9 @@ public class DeckController {
     }
 
     @PostMapping("/create")
-    public ResponseEntity<Long> createDeck() {
-        Long deckId = deckService.createDeck();
-        return ResponseEntity.ok(deckId);
+    public ResponseEntity<DeckDto> createDeck() {
+        DeckDto deckDto = new DeckDto(deckService.createDeck());
+        return ResponseEntity.ok(deckDto);
     }
 
     @GetMapping("/{id}")
