@@ -30,14 +30,14 @@ public class CardTableServiceImpl extends AbstractCommonService implements CardT
     }
 
     @Override
-    public CardTable createCardTable(String name) {
-        validateCreateCardTableRequest(name);
+    public Long createCardTable(String tableName) {
+        validateCreateCardTableRequest(tableName);
         Deck deck = deckService.createDeck();
-        CardTable cardTable = new CardTable(null, name, deck);
+        CardTable cardTable = new CardTable(null, tableName, deck);
         deck.setCardTable(cardTable);
         cardTableRepository.save(cardTable);
 
-        return cardTable;
+        return cardTable.getId();
     }
 
     private void validateCreateCardTableRequest(String name) {
@@ -46,6 +46,23 @@ public class CardTableServiceImpl extends AbstractCommonService implements CardT
         }
         if (cardTableRepository.existsByName(name)) {
             throw new CommonConflictException(msgSource.ERR003);
+        }
+    }
+
+    @Override
+    public Player addPlayer(Long cardTableId, Player player) {
+        CardTable cardTable = this.getCardTable(cardTableId);
+        checkNumberOfPlayers(cardTable);
+        player = playerService.createPlayer(player);
+        cardTable.setPlayer(player);
+        player.setCardTable(cardTable);
+        updateCardTable(cardTable);
+        return player;
+    }
+
+    private void checkNumberOfPlayers(CardTable cardTable) {
+        if(cardTable.getPlayers().size() >= 4) {
+            throw new CommonConflictException(msgSource.ERR006);
         }
     }
 
@@ -77,22 +94,4 @@ public class CardTableServiceImpl extends AbstractCommonService implements CardT
         checkCardTableId(cardTable.getId());
         cardTableRepository.save(cardTable);
     }
-
-    @Override
-    public Player addPlayer(Long cardTableId, Player player) {
-        CardTable cardTable = this.getCardTable(cardTableId);
-        checkNumberOfPlayers(cardTable);
-        player = playerService.createPlayer(player);
-        cardTable.setPlayer(player);
-        player.setCardTable(cardTable);
-        updateCardTable(cardTable);
-        return player;
-    }
-
-    private void checkNumberOfPlayers(CardTable cardTable) {
-        if(cardTable.getPlayers().size() >= 4) {
-            throw new CommonConflictException(msgSource.ERR006);
-        }
-    }
-
 }

@@ -17,14 +17,14 @@ public class CardTableDto {
 
     private Long id;
     private String name;
-    private DeckDto deckDto;
+    private DeckDto deck;
     private List<PlayerDto> players = new ArrayList<>();
     private List<CardDto> cards = new ArrayList<>();
 
     public CardTableDto(CardTable cardTable) {
         this.id = cardTable.getId();
         this.name = cardTable.getName();
-        this.deckDto = new DeckDto(cardTable.getDeck());
+        this.deck = new DeckDto(cardTable.getDeck());
         for(Player player: cardTable.getPlayers()) {
             this.players.add(new PlayerDto(player));
         }
