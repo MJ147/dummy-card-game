@@ -4,7 +4,7 @@ import com.mj147.domain.CardTable;
 import com.mj147.domain.player.Player;
 
 public interface CardTableService {
-    CardTable createCardTable(String name);
+    Long createCardTable(String name);
 
     CardTable getCardTable(Long id);
 

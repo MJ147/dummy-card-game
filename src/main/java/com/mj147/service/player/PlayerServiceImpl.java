@@ -37,24 +37,23 @@ public class PlayerServiceImpl extends AbstractCommonService implements PlayerSe
     @Override
     public Player createPlayer(Player player) {
         validateCreatePlayerRequest(player);
-//        Player player = new Player(null, player.getName(), playerDto.getSex(), playerDto.getAge());
         playerRepository.save(player);
 
         return player;
     }
 
     private void validateCreatePlayerRequest(Player player) {
-        if (isNullOrEmpty(player.getName())
-                || isNull(player.getSex())
-                || isNull(player.getAge())) {
-            throw new CommonBadRequestException(msgSource.ERR001);
+        if (isNullOrEmpty(player.getName())) {
+//                || isNull(player.getSex())
+//                || isNull(player.getAge()))
+           throw new CommonBadRequestException(msgSource.ERR001);
         }
         if (playerRepository.existsByName(player.getName())) {
             throw new CommonConflictException(msgSource.ERR003);
         }
-        if (isZero(player.getAge())) {
-            throw new CommonConflictException((msgSource.ERR004));
-        }
+//        if (isZero(player.getAge())) {
+//            throw new CommonConflictException((msgSource.ERR004));
+//        }
     }
 
     @Override

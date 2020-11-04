@@ -4,6 +4,7 @@ import com.mj147.controller.dto.CardTableDto;
 import com.mj147.controller.dto.player.PlayerDto;
 import com.mj147.domain.player.Player;
 import com.mj147.service.CardTableService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -16,23 +17,23 @@ import java.util.stream.StreamSupport;
 @RequestMapping("/table")
 public class CardTableController {
 
-    private final CardTableService cardTableService;
+    @Autowired
+    CardTableService cardTableService;
+    final static String corsUrl = "http://localhost:4200";
 
-    public CardTableController(CardTableService cardTableService) {
-        this.cardTableService = cardTableService;
-    }
-
+    @CrossOrigin(origins = corsUrl)
     @PostMapping("/")
-    public ResponseEntity<CardTableDto> createCardTable(@RequestParam String name) {
-        CardTableDto cardTableDto = new CardTableDto(cardTableService.createCardTable(name));
-        return ResponseEntity.ok(cardTableDto);
+    public ResponseEntity<Long> createCardTable(@RequestParam String name) {
+        Long cardTableId = cardTableService.createCardTable(name);
+        return ResponseEntity.ok(cardTableId);
     }
 
+    @CrossOrigin(origins = corsUrl)
     @GetMapping("/{id}")
     public ResponseEntity<CardTableDto> getCardTable(@PathVariable Long id) {
         return ResponseEntity.ok(new CardTableDto(cardTableService.getCardTable(id)));
     }
-
+    @CrossOrigin(origins = corsUrl)
     @GetMapping("/all")
     public ResponseEntity<List<CardTableDto>> getAllCardTables() {
         List<CardTableDto> cardPlayerDtoList = StreamSupport.stream(cardTableService.getAllCardTables().spliterator(), false)
@@ -41,14 +42,14 @@ public class CardTableController {
 
         return ResponseEntity.ok(cardPlayerDtoList);
     }
-
+    @CrossOrigin(origins = corsUrl)
     @DeleteMapping("/{id}")
     public HttpStatus removeCardTable(@PathVariable("id") Long id) {
         cardTableService.removeCardTable(id);
 
         return HttpStatus.OK;
     }
-
+    @CrossOrigin(origins = corsUrl)
     @PutMapping("/add-player/")
     public ResponseEntity<PlayerDto> addPlayer(@RequestParam Long tableId, @RequestBody Player player){
         PlayerDto playerDto = new PlayerDto(cardTableService.addPlayer(tableId, player));
