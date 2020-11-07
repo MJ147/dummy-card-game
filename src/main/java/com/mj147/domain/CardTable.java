@@ -31,10 +31,11 @@ public class CardTable {
         this.name = name;
     }
 
-    public CardTable(Long id, String name, Deck deck) {
+    public CardTable(Long id, String name, Deck deck, Player player) {
         this.id = id;
         this.name = name;
         this.deck = deck;
+        this.setPlayer(player);
     }
 
     public List<Card> getCards() {

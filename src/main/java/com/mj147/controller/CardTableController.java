@@ -23,8 +23,8 @@ public class CardTableController {
 
     @CrossOrigin(origins = corsUrl)
     @PostMapping("/")
-    public ResponseEntity<Long> createCardTable(@RequestParam String name) {
-        Long cardTableId = cardTableService.createCardTable(name);
+    public ResponseEntity<Long> createCardTableWithPlayer(@RequestParam String tableName, @RequestParam Long playerId) {
+        Long cardTableId = cardTableService.createTable(tableName, playerId);
         return ResponseEntity.ok(cardTableId);
     }
 
@@ -50,9 +50,9 @@ public class CardTableController {
         return HttpStatus.OK;
     }
     @CrossOrigin(origins = corsUrl)
-    @PutMapping("/add-player/")
-    public ResponseEntity<PlayerDto> addPlayer(@RequestParam Long tableId, @RequestBody Player player){
-        PlayerDto playerDto = new PlayerDto(cardTableService.addPlayer(tableId, player));
+    @PatchMapping("/add-player")
+    public ResponseEntity<PlayerDto> addPlayer(@RequestParam Long tableId, @RequestParam Long playerId){
+        PlayerDto playerDto = new PlayerDto(cardTableService.addPlayer(tableId, playerId));
 
         return  ResponseEntity.ok(playerDto);
     }
