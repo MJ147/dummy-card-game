@@ -35,11 +35,18 @@ public class PlayerServiceImpl extends AbstractCommonService implements PlayerSe
     }
 
     @Override
-    public Player createPlayer(Player player) {
+    public Long createPlayer(Player player) {
         validateCreatePlayerRequest(player);
         playerRepository.save(player);
 
-        return player;
+        return player.getId();
+    }
+
+    @Override
+    public Long updatePlayer(Player player) {
+        checkPlayerId(player.getId());
+
+        return this.createPlayer(player);
     }
 
     private void validateCreatePlayerRequest(Player player) {
@@ -77,12 +84,6 @@ public class PlayerServiceImpl extends AbstractCommonService implements PlayerSe
         if (!playerRepository.findById(id).isPresent()) {
             throw new CommonConflictException(msgSource.ERR002);
         }
-    }
-
-    @Override
-    public void updatePlayer(Player player) {
-        checkPlayerId(player.getId());
-        playerRepository.save(player);
     }
 
     @Transactional

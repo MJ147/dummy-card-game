@@ -12,6 +12,7 @@ import com.mj147.service.cards.DeckService;
 import com.mj147.service.player.PlayerService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import static com.mj147.common.ValidationUtils.*;
 
@@ -30,10 +31,13 @@ public class CardTableServiceImpl extends AbstractCommonService implements CardT
     }
 
     @Override
-    public Long createCardTable(String tableName) {
+    public Long createTable(String tableName, Long playerId) {
         validateCreateCardTableRequest(tableName);
         Deck deck = deckService.createDeck();
-        CardTable cardTable = new CardTable(null, tableName, deck);
+        Player player = playerService.getPlayer(playerId);
+        CardTable cardTable = new CardTable(null, tableName, deck, player);
+        cardTable.setPlayer(player);
+        player.setCardTable(cardTable);
         deck.setCardTable(cardTable);
         cardTableRepository.save(cardTable);
 
@@ -50,13 +54,14 @@ public class CardTableServiceImpl extends AbstractCommonService implements CardT
     }
 
     @Override
-    public Player addPlayer(Long cardTableId, Player player) {
-        CardTable cardTable = this.getCardTable(cardTableId);
+    public Player addPlayer(Long tableId, Long playerId) {
+        CardTable cardTable = this.getCardTable(tableId);
         checkNumberOfPlayers(cardTable);
-        player = playerService.createPlayer(player);
+        Player player = playerService.getPlayer(playerId);
         cardTable.setPlayer(player);
         player.setCardTable(cardTable);
         updateCardTable(cardTable);
+        System.out.println(cardTable);
         return player;
     }
 

@@ -22,9 +22,16 @@ public class PlayerController {
 
     @CrossOrigin(origins = corsUrl)
     @PostMapping("/")
-    public ResponseEntity<PlayerDto> createPlayer(@RequestBody Player player) {
-        PlayerDto playerDto = new PlayerDto(playerService.createPlayer(player));
-        return ResponseEntity.ok(playerDto);
+    public ResponseEntity<Long> createPlayer(@RequestBody Player player) {
+        Long playerId = playerService.createPlayer(player);
+        return ResponseEntity.ok(playerId);
+    }
+
+    @CrossOrigin(origins = corsUrl)
+    @PatchMapping("/")
+    public ResponseEntity<Long> updatePlayer(@RequestBody Player player) {
+        Long playerId = playerService.updatePlayer(player);
+        return ResponseEntity.ok(playerId);
     }
 
     @CrossOrigin(origins = corsUrl)
