@@ -1,4 +1,4 @@
-# Durak Card Game
+# Durak Card Game API
 Java Rest API for card game named "durak".
 
 ## General info
